@@ -44,7 +44,7 @@ function msg(text) {
 // SOLICITUD DE SERVICIO
 // ==========================================
 
-const serviceForm = document.getElementById("ServiceForm");
+const serviceForm = document.getElementById("serviceForm");
 
 if (serviceForm) {
   serviceForm.addEventListener("submit", async (e) => {
