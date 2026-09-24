@@ -135,9 +135,68 @@ for (const foto of fotos) {
 const techForm = document.getElementById("techForm");
 
 if (techForm) {
-  techForm.addEventListener("submit", (e) => {
+  techForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    msg("Formulario de técnicos listo. Lo conectaremos enseguida.");
+    const nombre = techForm.querySelector('[name="nombre"]').value.trim();
+    const telefono = techForm.querySelector('[name="telefono"]').value.trim();
+    const correo = techForm.querySelector('[name="correo"]').value.trim();
+    const ciudad = techForm.querySelector('[name="zona"]').value.trim();
+    const especialidad = techForm.querySelector('[name="especialidad"]').value;
+    const anosExperiencia = Number(
+      techForm.querySelector('[name="experiencia"]').value
+    );
+    const cedula = techForm.querySelector('[name="cedula"]').value.trim();
+    const disponibilidad = techForm.querySelector('[name="disponibilidad"]').value;
+    const experienciaLaboral = techForm
+      .querySelector('[name="experiencia_laboral"]')
+      .value.trim();
+
+    const herramienta =
+      techForm.querySelector('[name="herramienta"]').value === "Sí";
+
+    const vehiculo =
+      techForm.querySelector('[name="vehiculo"]').value === "Sí";
+
+    try {
+      const respuesta = await fetch(
+        `${SUPABASE_URL}postulaciones_tecnicos`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal"
+          },
+          body: JSON.stringify({
+            nombre: nombre,
+            "teléfono": telefono,
+            "Correo": correo,
+            "Ciudad": ciudad,
+            "Especialidad": especialidad,
+            anos_experiencia: anosExperiencia,
+            cedula_profesional: cedula || null,
+            disponibilidad: disponibilidad,
+            experiencia_laboral: experienciaLaboral,
+            herramienta_propia: herramienta,
+            vehiculo_propio: vehiculo,
+            "Estado": "Nueva"
+          })
+        }
+      );
+
+      if (!respuesta.ok) {
+        const error = await respuesta.text();
+        console.error("Error Supabase técnicos:", error);
+        throw new Error(error);
+      }
+
+      msg("Solicitud enviada correctamente. MIRS revisará tu postulación.");
+      techForm.reset();
+
+    } catch (error) {
+      console.error(error);
+      msg("No se pudo enviar la postulación. Intenta nuevamente.");
+    }
   });
 }
