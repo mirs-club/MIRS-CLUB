@@ -67,7 +67,7 @@ const fotos = fotosInput ? Array.from(fotosInput.files) : [];
 
     try {
       const respuesta = await fetch(
-        `${SUPABASE_URL}/solicitudes`,
+        `${SUPABASE_URL}solicitudes`,
         {
           method: "POST",
           headers: {
