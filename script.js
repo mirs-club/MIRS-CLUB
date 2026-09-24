@@ -98,7 +98,7 @@ for (const foto of fotos) {
   const nombreArchivo = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
   const subidaFoto = await fetch(
-    `${SUPABASE_URL.replace("/rest/v1/", "")}/storage/v1/object/solicitudes-fotos/${nombreArchivo}`,
+    `${SUPABASE_URL.replace(/\/rest\/v1\/?$/, "")}/storage/v1/object/solicitudes-fotos/${nombreArchivo}`,
     {
       method: "POST",
       headers: {
