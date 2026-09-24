@@ -57,6 +57,8 @@ if (serviceForm) {
     const servicio = serviceForm.querySelector('[name="Servicio"]')?.value;
     const descripcion = serviceForm.querySelector('[name="problema"]')?.value?.trim();
     const fecha = serviceForm.querySelector('[name="fecha"]')?.value;
+    const fotosInput = serviceForm.querySelector('input[type="file"]');
+const fotos = fotosInput ? Array.from(fotosInput.files) : [];
 
     if (!nombre || !telefono || !correo || !domicilio || !servicio || !descripcion) {
       msg("Por favor completa todos los campos obligatorios.");
@@ -90,7 +92,30 @@ if (serviceForm) {
         console.error("Error Supabase:", error);
         throw new Error(error);
       }
+// Subir fotografías a Supabase Storage
+for (const foto of fotos) {
+  const extension = foto.name.split(".").pop();
+  const nombreArchivo = `${Date.now()}-${crypto.randomUUID()}.${extension}`;
 
+  const subidaFoto = await fetch(
+    `${SUPABASE_URL}/storage/v1/object/solicitudes-fotos/${nombreArchivo}`,
+    {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": foto.type,
+        "x-upsert": "false"
+      },
+      body: foto
+    }
+  );
+
+  if (!subidaFoto.ok) {
+    const errorFoto = await subidaFoto.text();
+    console.error("Error subiendo fotografía:", errorFoto);
+    throw new Error("No se pudo subir una de las fotografías.");
+  }
+}
       msg("Solicitud enviada correctamente. MIRS se pondrá en contacto contigo.");
 
       serviceForm.reset();
