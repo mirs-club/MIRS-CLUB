@@ -169,19 +169,19 @@ if (techForm) {
             Prefer: "return=minimal"
           },
           body: JSON.stringify({
-            nombre: nombre,
-            "teléfono": telefono,
-            "Correo": correo,
-            "Ciudad": ciudad,
-            "Especialidad": especialidad,
-            anos_experiencia: anosExperiencia,
-            cedula_profesional: cedula || null,
-            disponibilidad: disponibilidad,
-            experiencia_laboral: experienciaLaboral,
-            herramienta_propia: herramienta,
-            vehiculo_propio: vehiculo,
-            "Estado": "Nueva"
-          })
+  nombre: nombre,
+  telefono: telefono,
+  correo: correo,
+  ciudad: ciudad,
+  especialidad: especialidad,
+  anos_experiencia: anosExperiencia,
+  cedula_profesional: cedula || null,
+  disponibilidad: disponibilidad,
+  experiencia_laboral: experienciaLaboral,
+  herramienta_propia: herramienta,
+  vehiculo_propio: vehiculo,
+  estado: "Nueva"
+})
         }
       );
 
