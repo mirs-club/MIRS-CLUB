@@ -51,11 +51,11 @@ if (serviceForm) {
     e.preventDefault();
 
     const nombre = serviceForm.querySelector('[name="nombre"]')?.value?.trim();
-    const telefono = serviceForm.querySelector('[name="telefono"]')?.value?.trim();
-    const correo = serviceForm.querySelector('[name="correo"]')?.value?.trim();
-    const domicilio = serviceForm.querySelector('[name="Domicilio"]')?.value?.trim();
-    const servicio = serviceForm.querySelector('[name="Servicio"]')?.value;
-    const descripcion = serviceForm.querySelector('[name="problema"]')?.value?.trim();
+const telefono = serviceForm.querySelector('[name="telefono"]')?.value?.trim();
+const correo = serviceForm.querySelector('[name="correo"]')?.value?.trim();
+const domicilio = serviceForm.querySelector('[name="domicilio"]')?.value?.trim();
+const servicio = serviceForm.querySelector('[name="servicio"]')?.value;
+const descripcion = serviceForm.querySelector('[name="problema"]')?.value?.trim();
     const fecha = serviceForm.querySelector('[name="fecha"]')?.value;
     const fotosInput = serviceForm.querySelector('input[type="file"]');
 const fotos = fotosInput ? Array.from(fotosInput.files) : [];
