@@ -4,7 +4,7 @@
 
 const SUPABASE_URL = "https://wloijcecapbnxhngwdvy.supabase.co/rest/v1/";
 const SUPABASE_KEY = "sb_publishable_6DApyskA1nYYgA1hCawNXw_qrymvaQE";
-
+const SUPABASE_STORAGE_URL = SUPABASE_URL.replace("/rest/v1/", "/storage/v1/");
 // ==========================================
 // MENÚ
 // ==========================================
@@ -163,7 +163,25 @@ const documentosFiles = Array.from(
       techForm.querySelector('[name="vehiculo"]').value === "Sí";
 
     try {
-      const respuesta = await fetch(
+      // Subir currículum a Supabase Storage
+const cvNombre = `${Date.now()}-cv-${cvFile.name}`;
+
+const cvRespuesta = await fetch(
+  `${SUPABASE_STORAGE_URL}/object/postulaciones-documentos/${encodeURIComponent(cvNombre)}`,
+  {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_KEY,
+      "Content-Type": cvFile.type
+    },
+    body: cvFile
+  }
+);
+
+if (!cvRespuesta.ok) {
+  const errorCV = await cvRespuesta.text();
+  throw new Error("Error al subir currículum: " + errorCV);
+}const respuesta = await fetch(
         `${SUPABASE_URL}postulaciones_tecnicos`,
         {
           method: "POST",
