@@ -146,6 +146,10 @@ if (techForm) {
     const anosExperiencia = Number(
       techForm.querySelector('[name="experiencia"]').value
     );
+    const cvFile = techForm.querySelector('[name="cv"]').files[0];
+const documentosFiles = Array.from(
+  techForm.querySelector('[name="documentos"]').files
+);
     const cedula = techForm.querySelector('[name="cedula"]').value.trim();
     const disponibilidad = techForm.querySelector('[name="disponibilidad"]').value;
     const experienciaLaboral = techForm
