@@ -182,6 +182,33 @@ if (!cvRespuesta.ok) {
   const errorCV = await cvRespuesta.text();
   throw new Error("Error al subir currículum: " + errorCV);
 }
+
+      // Subir certificaciones / documentos
+const documentosNombres = [];
+
+for (const archivo of documentosFiles) {
+  const documentoNombre =
+    `${Date.now()}-${Math.random().toString(36).slice(2)}-${archivo.name}`;
+
+  const documentoRespuesta = await fetch(
+    `${SUPABASE_STORAGE_URL}/object/postulaciones-documentos/${encodeURIComponent(documentoNombre)}`,
+    {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": archivo.type
+      },
+      body: archivo
+    }
+  );
+
+  if (!documentoRespuesta.ok) {
+    const errorDocumento = await documentoRespuesta.text();
+    throw new Error("Error al subir documento: " + errorDocumento);
+  }
+
+  documentosNombres.push(documentoNombre);
+}
       const respuesta = await fetch(
         `${SUPABASE_URL}postulaciones_tecnicos`,
         {
@@ -205,7 +232,7 @@ if (!cvRespuesta.ok) {
   vehiculo_propio: vehiculo,
   estado: "Nueva"
 })
-        }
+        
       );
 
       if (!respuesta.ok) {
