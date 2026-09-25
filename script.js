@@ -181,7 +181,8 @@ const cvRespuesta = await fetch(
 if (!cvRespuesta.ok) {
   const errorCV = await cvRespuesta.text();
   throw new Error("Error al subir currículum: " + errorCV);
-}const respuesta = await fetch(
+}
+      const respuesta = await fetch(
         `${SUPABASE_URL}postulaciones_tecnicos`,
         {
           method: "POST",
